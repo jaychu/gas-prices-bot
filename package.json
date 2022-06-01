@@ -1,0 +1,26 @@
+{
+  "name": "gas-prices-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaychu/gas-prices-bot"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaychu/gas-prices-bot/issues"
+  },
+  "homepage": "https://github.com/jaychu/gas-prices-bot#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cron": "^1.8.2",
+    "discord.js": "^12.3.1",
+    "node-html-parser": "^5.3.3"
+  }
+}

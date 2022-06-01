@@ -1,0 +1,6 @@
+{
+    "BOT_TOKEN": "XXX",
+    "Gas_Price_Page": "https://toronto.citynews.ca/wp-json/rdm-grcn/v2/pages/toronto-gta-gas-prices/",
+    "CHANNEL_NAME": "gas-price",
+    "TIMEZONE": "America/Toronto"
+}
