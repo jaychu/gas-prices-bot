@@ -16,6 +16,7 @@ var job = new CronJob('0 15 * * *', function () {
 
 client.on('ready', () => {  
   job.start();  
+  GrabGasPrediction();  
 });
 
 async function GrabGasPrediction(){
@@ -24,16 +25,18 @@ async function GrabGasPrediction(){
   let feed = await axios.get(apiURL);  
   let root = parse(feed.data.content);
   let arrow;
-  if(feed.data.content.includes(".up-arrow{display:block;")){
+  var value = root.querySelector('.data-box-change').removeWhitespace().text.toString();
+  var msg = root.querySelector('.data-box-change').nextElementSibling.text.toString();
+  if(feed.data.content.includes(".up-arrow{display:block")){
     arrow = "https://raw.githubusercontent.com/jaychu/gas-prices-bot/master/assets/up.JPG";
-  }else if(feed.data.content.includes(".down-arrow{display:block;")){
+    value = " + "+value;
+  }else if(feed.data.content.includes(".down-arrow{display:block")){
     arrow = "https://raw.githubusercontent.com/jaychu/gas-prices-bot/master/assets/down.JPG";
+    value = " - "+value;
   }else{
     arrow = "";
   }
   
-  var value = root.querySelector('.data-box-change').removeWhitespace().text.toString();
-  var msg = root.querySelector('.data-box-change').nextElementSibling.text.toString();
   channel.send(PostMessage(value,msg,arrow));
 }
 
