@@ -16,7 +16,6 @@ var job = new CronJob('0 15 * * *', function () {
 
 client.on('ready', () => {  
   job.start();  
-  GrabGasPrediction();  
 });
 
 async function GrabGasPrediction(){
