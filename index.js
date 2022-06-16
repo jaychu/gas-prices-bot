@@ -25,11 +25,11 @@ async function GrabGasPrediction(){
   let root = parse(feed.data.content);
   let arrow;
   var value = root.querySelector('.data-box-change').removeWhitespace().text.toString();
-  var msg = root.querySelector('.data-box-change').nextElementSibling.text.toString();
-  if(feed.data.content.includes(".up-arrow{display:block")){
+  var msg = root.querySelector('.data-box-change').parentNode.removeChild(root.querySelector('.data-box-change')).text.toString();
+  if(feed.data.content.includes("class=\"up-arrow\" style=\"display:block\"")){
     arrow = "https://raw.githubusercontent.com/jaychu/gas-prices-bot/master/assets/up.JPG";
     value = " + "+value;
-  }else if(feed.data.content.includes(".down-arrow{display:block")){
+  }else if(feed.data.content.includes("class=\"down-arrow\" style=\"display:block\"")){
     arrow = "https://raw.githubusercontent.com/jaychu/gas-prices-bot/master/assets/down.JPG";
     value = " - "+value;
   }else{
