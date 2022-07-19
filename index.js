@@ -3,23 +3,34 @@ let CronJob = require("cron").CronJob;
 let config = require("./config.json");
 let axios = require('axios');
 let parse = require('node-html-parser').parse;
+let {MongoClient} = require('mongodb');
 
-const client = new Discord.Client();
+const discordClient = new Discord.Client();
 
-client.login(config.BOT_TOKEN);
+discordClient.login(config.BOT_TOKEN);
+const uri = `mongodb://${config.MongoDB_Hostname}:${config.MongoDB_Port}/?maxPoolSize=20&w=majority`;
 
-var job = new CronJob('0 15 * * *', function () {
+const mongoClient = new MongoClient(uri);
+
+var discordJob = new CronJob('0 15 * * *', function () {
   (async () => {
     GrabGasPrediction();  
   })();
 }, null, true, config.TIMEZONE);
 
-client.on('ready', () => {  
-  job.start();  
+var mongoDBJob = new CronJob('0 23 * * *', function () {
+  (async () => {
+    GrabGasTableforDb();
+  })();
+}, null, true, config.TIMEZONE);
+
+discordClient.on('ready', () => {  
+  discordJob.start();  
+  mongoDBJob.start();
 });
 
 async function GrabGasPrediction(){
-  const channel = client.channels.cache.find(channel => channel.name === config.CHANNEL_NAME)
+  const channel = discordClient.channels.cache.find(channel => channel.name === config.CHANNEL_NAME)
   let apiURL = config.Gas_Price_Page;
   let feed = await axios.get(apiURL);  
   let root = parse(feed.data.content);
@@ -50,3 +61,36 @@ function PostMessage(value,msg,arrow){
   });
   return message;
 }
+
+async function GrabGasTableforDb(){
+  let apiURL = config.Gas_Price_Page;
+  let feed = await axios.get(apiURL);  
+  let root = parse(feed.data.content);
+  var value = root.querySelector('.page-table-body tbody tr:nth-child(2)').text.trim().split('\n');
+  let date = value[0].trim();
+  let delta = Number(value[1].trim().split(' ')[0]);
+  let price = Number(value[2].trim().split(' ')[0]);
+
+  insertIntoDb(date,delta,price);
+}
+async function insertIntoDb(date,delta,price){
+  try {
+    // Connect the client to the server (optional starting in v4.7)
+    await mongoClient.connect();
+    // Establish and verify connection
+    const db = await mongoClient.db("GasPrice");
+    const col = db.collection("GasTrend");
+    let entry = {
+      date:date,
+      delta:delta,
+      price:price
+    }
+    await col.insertOne(entry);
+    console.log("Submission successful!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await mongoClient.close();
+  }
+}
+
+
