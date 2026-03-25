@@ -28,12 +28,3 @@ client.on(Events.ClientReady, readyClient => {
         )    
     console.log("GasPriceBot is now online!");
 });
-
-
-
-
-/* 
-
-
-
- */
