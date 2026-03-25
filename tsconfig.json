@@ -3,7 +3,6 @@
     "module":"CommonJS",
     "target":"es2018",
     "outDir":"build",
-    "rootDir": "src",
     "lib":[
       "ESNext",
       "ESNext.Array",
