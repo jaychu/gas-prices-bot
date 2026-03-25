@@ -1,0 +1,1 @@
+export const configFile: string = (process.env.NODE_ENV === 'production') ?"/gaspricebot-data/config.json" :"data/config.json";

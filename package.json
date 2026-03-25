@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "build": "tsc",
+    "start": "node build/bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,10 +19,17 @@
   },
   "homepage": "https://github.com/jaychu/gas-prices-bot#readme",
   "dependencies": {
-    "axios": "^0.21.1",
-    "cron": "^1.8.2",
-    "discord.js": "^12.3.1",
-    "mongodb": "^4.8.0",
-    "node-html-parser": "^5.3.3"
+    "axios": "^1.13.6",
+    "cron": "^4.4.0",
+    "discord.js": "^14.25.1",
+    "fs": "^0.0.1-security",
+    "node-html-parser": "^7.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

@@ -1,26 +1,11 @@
-let Discord = require("discord.js");
-let CronJob = require("cron").CronJob;
-let config = require("./config.json");
-let axios = require('axios');
-let parse = require('node-html-parser').parse;
+import axios from "axios";
+import { parse } from 'node-html-parser';
+import {configFile} from '../constants';
+import { EmbedBuilder } from "discord.js";
 
-const discordClient = new Discord.Client();
+const config = (process.env.NODE_ENV === 'production') ? require(configFile) : require("../../"+configFile);
 
-discordClient.login(config.BOT_TOKEN);
-
-var discordJob = new CronJob('0 15 * * *', function () {
-  (async () => {
-    discordClient.channels.cache.each(
-      (channel) => GrabGasPrediction(channel)
-    )    
-  })();
-}, null, true, config.TIMEZONE);
-
-discordClient.on('ready', () => {  
-  discordJob.start();  
-});
-
-async function GrabGasPrediction(channel){
+export async function GrabGasPrediction(channel){
   if(channel.name === config.CHANNEL_NAME){
     let apiURL = config.Gas_Price_Page;
     let feed = await axios.get(apiURL);  
@@ -37,21 +22,18 @@ async function GrabGasPrediction(channel){
     }else{
       arrow = "";
     }    
-    channel.send(PostMessage(value,msg,arrow));
+    channel.send({
+        content:"Your Gas Price Forecast for tomorrow:",
+        embeds:[PostMessage(value,msg,arrow)]
+    });
   }
 }
 
 function PostMessage(value,msg,arrow){
-  var message = new Discord.MessageEmbed({
-    title:"Gas Price Delta: "+value,
-    url:"https://toronto.citynews.ca/toronto-gta-gas-prices/",
-    thumbnail:{
-      url:arrow
-    },
-    description:msg
-  });
+    let message = new EmbedBuilder()
+        .setTitle(`Gas Price Delta: ${value}`)
+        .setURL('https://toronto.citynews.ca/toronto-gta-gas-prices/')
+        .setThumbnail(arrow) // Just pass the string URL here
+        .setDescription(msg);
   return message;
 }
-
-
-
