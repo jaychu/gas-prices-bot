@@ -24,27 +24,27 @@ export async function GrabGasPrediction(channel){
     }
     if(feed.data.content.includes("class=\"up-arrow\" style=\"display:block\"")){
       arrow = "https://raw.githubusercontent.com/jaychu/gas-prices-bot/master/assets/up.JPG";
-      delta = " + "+delta;
+      delta = "+" + delta;
     }else if(feed.data.content.includes("class=\"down-arrow\" style=\"display:block\"")){
       arrow = "https://raw.githubusercontent.com/jaychu/gas-prices-bot/master/assets/down.JPG";
-      delta = " - "+delta;
+      delta = "-" + delta;
     }else{
       arrow = "";
     }    
      channel.send({
         content:"Your Gas Price Forecast for tomorrow:",
-        embeds:[PostMessage(delta,msg+notes,arrow)]
+        embeds:[PostMessage(delta, finalPrice, msg + notes, arrow)]
     }); 
     
     AddEntryIntoDB(finalPrice, notes);
   }
 }
 
-function PostMessage(value,msg,arrow){
+function PostMessage(delta:string, finalPrice:string, msg:string, arrow:string){
     let message = new EmbedBuilder()
-        .setTitle(`Gas Price Delta: ${value}`)
+        .setTitle(`Gas Price: ${finalPrice} (${delta}) cent(s)/litre`)
         .setURL('https://toronto.citynews.ca/toronto-gta-gas-prices/')
-        .setThumbnail(arrow) // Just pass the string URL here
+        .setThumbnail(arrow) 
         .setDescription(msg);
   return message;
 }
