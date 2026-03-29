@@ -1,4 +1,4 @@
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import { Client, Events, GatewayIntentBits, type GuildChannel } from "discord.js";
 import { CronJob } from "cron";
 import { getDiscordToken } from './helpers/secrets';
 import { GrabGasPrediction } from './helpers/functions';

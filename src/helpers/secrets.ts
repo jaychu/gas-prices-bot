@@ -9,5 +9,6 @@ export function getDiscordToken(): string{
   } catch (err) {
     console.error("Could not find discord_token file in data/!");
     console.error(err);
+    return "";
   }
 }

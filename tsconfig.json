@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module":"CommonJS",
+    "module":"esnext",
     "target":"es2018",
     "outDir":"build",
     "lib":[
@@ -9,19 +9,41 @@
       "ESNext.AsyncIterable",
       "ESNext.Intl",
       "ESNext.Symbol",
-      "DOM"
+      "DOM",
+      "dom.iterable", 
+      "esnext"
     ],
     "sourceMap": false,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "incremental": true,
-    "esModuleInterop":true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+  },
+  "paths": {
+      "@/*": ["./*"]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
   ],
+  "plugins": [{
+        "name": "next"
+  }],
   "exclude":[
     "node_modules"
   ]
