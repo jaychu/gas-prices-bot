@@ -23,10 +23,5 @@ client.on(Events.ClientReady, readyClient => {
         )    
       })();
     }, null, true, config.TIMEZONE);
-          (async () => {
-        client.channels.cache.each(
-          (channel) => GrabGasPrediction(channel)
-        )    
-      })();
     console.log("GasPriceBot is now online!");
 });
