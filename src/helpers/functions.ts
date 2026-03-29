@@ -30,14 +30,13 @@ export async function GrabGasPrediction(channel){
       arrow = "https://raw.githubusercontent.com/jaychu/gas-prices-bot/master/assets/down.JPG";
       delta = "-" + delta;
     }else{
-      arrow = " ";
+      arrow = null;
     }    
 
     let extractedDate = msg.match(dateRegex);
     let dateObj = new Date(`${extractedDate[1].trim()} 00:01:00`);
     let isoStringDate = dateObj.toISOString().split('T')[0];
     if(!CheckEntry(isoStringDate)){
-      console.log("YES!")
       channel.send({
           content:"Your Gas Price Forecast for tomorrow:",
           embeds:[PostMessage(delta, finalPrice, msg + notes, arrow)]
@@ -45,10 +44,9 @@ export async function GrabGasPrediction(channel){
       
       AddEntryIntoDB(finalPrice, notes);
     }else{
-      console.log("NO!")
       channel.send({
           content:msgFromGasbot_noUpdate,
-          embeds:[PostMessage("0", finalPrice, noteFromGasbot_noUpdate, " ")]
+          embeds:[PostMessage("0", finalPrice, noteFromGasbot_noUpdate, null)]
       }); 
       AddEntryIntoDB(finalPrice, "");
     }
@@ -61,8 +59,13 @@ function PostMessage(delta:string, finalPrice:string, msg:string, arrow:string){
     let message = new EmbedBuilder()
         .setTitle(`Gas Price: ${finalPrice} (${delta}) cent(s)/litre`)
         .setURL('https://toronto.citynews.ca/toronto-gta-gas-prices/')
-        .setThumbnail(arrow) 
         .setDescription(msg);
+    if(delta=="0"){
+      message.setTitle(`Gas Price: ${finalPrice} cent(s)/litre`)
+    }
+    if(!arrow){
+      message.setThumbnail(arrow);
+    }
   return message;
 }
 
