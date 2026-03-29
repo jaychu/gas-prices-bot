@@ -1,12 +1,12 @@
 import axios from "axios";
 import { parse } from 'node-html-parser';
-import {configFile} from '../constants';
+import { configFile, msgFromGasbot_noUpdate, noteFromGasbot_noUpdate} from '../constants';
 import { EmbedBuilder } from "discord.js";
-import { AddNewEntry } from "./queries"
+import { AddNewEntry, CheckEntry} from "./queries"
 
 const config = (process.env.NODE_ENV === 'production') ? require(configFile) : require("../../"+configFile);
 const priceRegex = /(\d+(\.\d+)?) (?=cent\(s\))/g;
-
+const dateRegex = / on\s+([A-Z][a-z]+\s+\d{1,2},\s+\d{4})/;
 
 export async function GrabGasPrediction(channel){
   if(channel.name === config.CHANNEL_NAME){
@@ -17,6 +17,7 @@ export async function GrabGasPrediction(channel){
     let msg = root.querySelector('.data-box-change').parentNode.removeChild(root.querySelector('.data-box-change')).text.toString();
     let notes = noteExtractor(root.querySelectorAll('p strong'));
     let matches = msg.match(priceRegex);
+
     if (matches) {
         delta = matches[0].trim();
         finalPrice = matches[1].trim();
@@ -29,14 +30,30 @@ export async function GrabGasPrediction(channel){
       arrow = "https://raw.githubusercontent.com/jaychu/gas-prices-bot/master/assets/down.JPG";
       delta = "-" + delta;
     }else{
-      arrow = "";
+      arrow = " ";
     }    
-     channel.send({
-        content:"Your Gas Price Forecast for tomorrow:",
-        embeds:[PostMessage(delta, finalPrice, msg + notes, arrow)]
-    }); 
-    
-    AddEntryIntoDB(finalPrice, notes);
+
+    let extractedDate = msg.match(dateRegex);
+    let dateObj = new Date(`${extractedDate[1].trim()} 00:01:00`);
+    let isoStringDate = dateObj.toISOString().split('T')[0];
+    if(!CheckEntry(isoStringDate)){
+      console.log("YES!")
+      channel.send({
+          content:"Your Gas Price Forecast for tomorrow:",
+          embeds:[PostMessage(delta, finalPrice, msg + notes, arrow)]
+      }); 
+      
+      AddEntryIntoDB(finalPrice, notes);
+    }else{
+      console.log("NO!")
+      channel.send({
+          content:msgFromGasbot_noUpdate,
+          embeds:[PostMessage("0", finalPrice, noteFromGasbot_noUpdate, " ")]
+      }); 
+      AddEntryIntoDB(finalPrice, "");
+    }
+
+
   }
 }
 
