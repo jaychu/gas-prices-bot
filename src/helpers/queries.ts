@@ -23,9 +23,8 @@ const db = new DatabaseSync(pathToDB);
     return new Promise(function(resolve){
         try{
             let query = `SELECT * FROM enprogas WHERE date=?`
-            console.log(`Query Executed from CheckBirthday:${query} with date ${date}`)
+            console.log(`Query Executed from CheckEntry:${query} with date ${date}`)
             let result = db.prepare(query).all(date);
-            console.log(result.length > 0);
             resolve(result.length > 0);
         } catch (e) {
             console.log(e);

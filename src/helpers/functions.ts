@@ -18,11 +18,16 @@ export async function GrabGasPrediction(channel){
     let notes = noteExtractor(root.querySelectorAll('p strong'));
     let matches = msg.match(priceRegex);
 
-    if (matches) {
+    if (matches && msg.includes("expected to remain unchanged")) {
+      finalPrice = matches[0].trim();
+    }
+    else if(matches)
+    {
         delta = matches[0].trim();
         finalPrice = matches[1].trim();
         console.log(`Change: ${delta}, New Price: ${finalPrice}`);
     }
+
     if(feed.data.content.includes("class=\"up-arrow\" style=\"display:block\"")){
       arrow = "https://raw.githubusercontent.com/jaychu/gas-prices-bot/master/assets/up.JPG";
       delta = "+" + delta;
@@ -36,19 +41,30 @@ export async function GrabGasPrediction(channel){
     let extractedDate = msg.match(dateRegex);
     let dateObj = new Date(`${extractedDate[1].trim()} 00:01:00`);
     let isoStringDate = dateObj.toISOString().split('T')[0];
-    if(!CheckEntry(isoStringDate)){
-      channel.send({
-          content:"Your Gas Price Forecast for tomorrow:",
-          embeds:[PostMessage(delta, finalPrice, msg + notes, arrow)]
-      }); 
-      
-      AddEntryIntoDB(finalPrice, notes);
-    }else{
+
+    let CheckRowDuplicate = await CheckEntry(isoStringDate);
+    if(CheckRowDuplicate){
+      console.log("No update From EnPro!")
       channel.send({
           content:msgFromGasbot_noUpdate,
           embeds:[PostMessage("0", finalPrice, noteFromGasbot_noUpdate, null)]
       }); 
       AddEntryIntoDB(finalPrice, "");
+    } else if(delta == null) {
+      console.log("No Change expected From EnPro!")
+      channel.send({
+          content:"Your Gas Price Forecast for tomorrow:",
+          embeds:[PostMessage("0", finalPrice, msg + notes, null)]
+      }); 
+      AddEntryIntoDB(finalPrice, notes);
+
+    } else {
+      console.log("Change expected From EnPro!")
+      channel.send({
+          content:"Your Gas Price Forecast for tomorrow:",
+          embeds:[PostMessage(delta, finalPrice, msg + notes, arrow)]
+      }); 
+      AddEntryIntoDB(finalPrice, notes);
     }
 
 
