@@ -3,7 +3,8 @@ import express, { Request, Response } from 'express';
 import { CronJob } from "cron";
 import { getDiscordToken } from './helpers/secrets.js';
 import { GrabGasPrediction } from './helpers/functions.js';
-import { configFile } from './constants.js';
+import { GetEntryRange } from "./helpers/queries.js";
+import { configFile, serverPort } from './constants.js';
 
 const configFilePath = (process.env.NODE_ENV === 'production') ? configFile : "./helpers/" + configFile;
 
@@ -14,7 +15,6 @@ const { default: config } = await import(configFilePath, {
 
 
 const app = express();
-const port = 8031
 
 app.use(express.json());;
 
@@ -41,16 +41,15 @@ client.on(Events.ClientReady, readyClient => {
   console.log("GasPriceBot is now online!");
 });
 
-
-app.get('/hello', (req: Request, res: Response) => {
-  res.send('Hello World!');
-});
-// A POST route receiving data
+// A POST route to receive date range, send back corresponding rows
 app.post('/getEntryRange', (req: Request, res: Response) => {
   console.log(req.body);
-  res.status(201).json({ message: "Data received" });
+  (async () => {
+    let result = await GetEntryRange(req.body.start, req.body.end)
+    res.status(201).json(result);
+  })();
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(serverPort, () => {
+  console.log(`Server running at http://localhost:${serverPort}`);
 });

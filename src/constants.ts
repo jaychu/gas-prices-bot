@@ -3,3 +3,5 @@ export const configFile: string = (process.env.NODE_ENV === 'production') ? "/ga
 
 export const msgFromGasbot_noUpdate = "EnPro did not provide an updated prediction";
 export const noteFromGasbot_noUpdate = "EnPro did not provide an updated prediction today, so we're operating under the assumption for now that no gas price will change tomorrow."
+
+export const serverPort = 8031;

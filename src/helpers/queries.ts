@@ -43,7 +43,7 @@ export async function GetEntryRange(start: string, end: string) {
             let query = `SELECT * FROM enprogas WHERE date BETWEEN ? AND ?`
             console.log(`Query Executed from CheckEntry:${query} with date ${start} & ${end}`)
             let result = db.prepare(query).all(start, end);
-            resolve(result.length > 0);
+            resolve(result);
         } catch (e) {
             console.log(e);
             resolve(false);

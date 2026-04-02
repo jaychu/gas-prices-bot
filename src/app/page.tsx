@@ -1,9 +1,10 @@
-import Image from "next/image";
+import GasForecast from "./components/gas-forecast/root";
 
 export default function Home() {
   return (
     <div>
-      <p>Home!</p>
+      <GasForecast />
     </div>
+
   );
 }
