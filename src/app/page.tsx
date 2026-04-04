@@ -1,4 +1,4 @@
-import GasForecast from "./components/gas-forecast/root";
+import GasForecast from "../components/gas-forecast/root";
 
 export default function Home() {
   return (

@@ -1,0 +1,111 @@
+.gas-forecast-component {
+    overflow: hidden;
+    border-color: rgb(255 255 255 / 0.05);
+    border-width: 1px;
+    border-radius: 0.75rem;
+    box-shadow: inset 1px 1px 0px 0px rgba(255, 255, 255, 0.1);
+    background: rgba(29, 32, 38, 0.7);
+    backdrop-filter: blur(16px);
+    padding: 10px 30px;
+    margin: 20px;
+}
+
+.gas-forecast-component-root {
+    display: flex
+}
+
+.gas-forecast,
+.gas-forecast-notes {
+    width: 50%;
+    border: 1px solid rgb(255 255 255 / 0.1);
+    border-radius: .75rem;
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.gas-forecast {
+    margin-right: 10px;
+}
+
+.gas-forecast-glow {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: -75px;
+    right: -75px;
+    border-radius: 9999px;
+    background-color: rgba(99, 102, 241, 0.1);
+    filter: blur(100px);
+}
+
+.gas-forecast-title>h2 {
+    --tw-text-opacity: 1;
+    color: rgb(197 197 212 / 1);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: Manrope;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.gas-forecast-title>p {
+    color: rgb(189 244 255 / 1);
+    font-size: 15px;
+    margin: 0;
+    font-family: Inter;
+}
+
+.gas-forcast-component-cards-root {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.gas-forcast-component-card {
+    margin: 10px 15px;
+}
+
+.gas-forcast-component-card .gas-card-price {
+    font-family: Manrope;
+    display: block;
+}
+
+.gas-forcast-component-card .gas-card-title {
+    font-family: Inter;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+
+.gas-forecast-notes {
+    font-family: Inter;
+    font-size: 14px;
+    margin-left: 10px;
+    color: rgb(197 197 212 / 1);
+}
+
+
+
+#todayPrice.gas-forcast-component-card .gas-card-price {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+#tomorrowPrice.gas-forcast-component-card .gas-card-price {
+    font-size: 48px;
+    font-weight: 800;
+
+}
+
+
+#todayPrice.gas-forcast-component-card .gas-card-title,
+#todayPrice.gas-forcast-component-card .gas-card-price {
+    color: rgb(225 226 235 / 0.4);
+}
+
+#tomorrowPrice.gas-forcast-component-card .gas-card-title,
+#tomorrowPrice.gas-forcast-component-card .gas-card-price {
+    color: rgb(255 255 255 / 1);
+}
