@@ -3,7 +3,7 @@ import "./gas-forecast.css";
 import GasForecastCard from "./card";
 
 // You can make Server Components async!
-async function GasForecast() {
+export default async function GasForecast() {
 
   let todayDate = "2026-04-01";
   let tomorrowDate = "2026-04-02";
@@ -57,5 +57,3 @@ async function GasForecast() {
     </div>
   );
 }
-
-export default GasForecast;

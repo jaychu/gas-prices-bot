@@ -1,4 +1,4 @@
-function GasForecastCard({ id, title, price }) {
+export default function GasForecastCard({ id, title, price }) {
 
     return (
         <div id={id} className="gas-forcast-component-card">
@@ -7,5 +7,3 @@ function GasForecastCard({ id, title, price }) {
         </div>
     )
 }
-
-export default GasForecastCard;

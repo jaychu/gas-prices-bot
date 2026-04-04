@@ -54,11 +54,18 @@ nav ul {
 }
 
 nav ul li a {
-  color: #818cf8;
+  color: rgb(100 116 139 / 1);
   text-decoration: none;
   display: flex;
   height: 40px;
   align-items: center;
+  padding: 5px 15px;
+}
+
+nav ul li a.active {
+  color: rgb(129 140 248 / 1);
+  border-right: 4px solid rgb(129 140 248 / 1);
+  background-color: rgb(99 102 241 / 0.1);
 }
 
 nav ul li a span.nav-title {

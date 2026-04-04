@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Inter } from "next/font/google";
+import NavLink from "../components/nav/nav-link";
 import "./globals.css";
 import 'material-symbols/outlined.css';
 
@@ -36,24 +37,10 @@ export default function RootLayout({
           </span>
           <ul>
             <li>
-              <a href="/">
-                <span className="material-symbols-outlined">
-                  online_prediction
-                </span>
-                <span className="nav-title">
-                  Gas Forecast
-                </span>
-              </a>
+              <NavLink href="/" icon="online_prediction" text="Gas Forecast" />
             </li>
             <li>
-              <a href="/historical-data">
-                <span className="material-symbols-outlined">
-                  finance_mode
-                </span>
-                <span className="nav-title">
-                  Historical Data
-                </span>
-              </a>
+              <NavLink href="/historical-data" icon="finance_mode" text="Historical Data" />
             </li>
           </ul>
         </nav>
