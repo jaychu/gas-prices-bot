@@ -1,6 +1,7 @@
 import { serverPort } from "../../constants"
 import "./gas-forecast.css";
 import GasForecastCard from "./card";
+import GasForecastDelta from "./delta";
 
 // You can make Server Components async!
 export default async function GasForecast() {
@@ -17,17 +18,15 @@ export default async function GasForecast() {
   });
 
   const result = await res.json();
-
   let todayRow, tomorrowRow;
   result.forEach(row => {
-    if (row.date = todayDate) {
+    if (row.date == todayDate) {
       todayRow = row;
     }
-    if (row.date = tomorrowDate) {
+    if (row.date == tomorrowDate) {
       tomorrowRow = row;
     }
   });
-
   return (
     <div className="gas-forecast-component">
       <div className="gas-forecast-glow"></div>
@@ -45,6 +44,7 @@ export default async function GasForecast() {
           <div className="gas-forcast-component-cards-root">
             <GasForecastCard id="todayPrice" title="today" price={todayRow.price} />
             <GasForecastCard id="tomorrowPrice" title="tomorrow" price={tomorrowRow.price} />
+            <GasForecastDelta todayPrice={todayRow.price} tomorrowPrice={tomorrowRow.price} />
           </div>
         </div>
         <div className="gas-forecast-notes">
