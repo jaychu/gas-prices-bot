@@ -1,18 +1,20 @@
 import { serverPort } from "../../constants"
 import "./gas-forecast.css";
 import GasForecastCard from "./card";
+import GasForecastChart from "./chart";
 import GasForecastDelta from "./delta";
 
 // You can make Server Components async!
 export default async function GasForecast() {
 
-  let todayDate = "2026-04-01";
-  let tomorrowDate = "2026-04-02";
+  let startDate = "2026-04-06";
+  let todayDate = "2026-04-11"
+  let tomorrowDate = "2026-04-12";
   const res = await fetch(`http://localhost:${serverPort}/getEntryRange`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      start: todayDate,
+      start: startDate,
       end: tomorrowDate
     }),
   });
@@ -40,20 +42,20 @@ export default async function GasForecast() {
         </div>
       </div>
       <div className="gas-forecast-component-root">
-        <div className="gas-forecast">
+        <div className="gas-forecast subcomponent-border">
           <div className="gas-forcast-component-cards-root">
             <GasForecastCard id="todayPrice" title="today" price={todayRow.price} />
             <GasForecastCard id="tomorrowPrice" title="tomorrow" price={tomorrowRow.price} />
             <GasForecastDelta todayPrice={todayRow.price} tomorrowPrice={tomorrowRow.price} />
           </div>
         </div>
-        <div className="gas-forecast-notes">
+        <div className="gas-forecast-notes subcomponent-border">
           {tomorrowRow.note}
         </div>
       </div>
-
-
-
+      <div className="subcomponent-border">
+        <GasForecastChart gasrow={result} />
+      </div>
     </div>
   );
 }
