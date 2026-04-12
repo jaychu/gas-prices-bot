@@ -53,7 +53,8 @@ export default async function GasForecast() {
           {tomorrowRow.note}
         </div>
       </div>
-      <div className="subcomponent-border">
+      <div className="gas-forecast-chart subcomponent-border">
+        <h3>7-day Price Trend</h3>
         <GasForecastChart gasrow={result} />
       </div>
     </div>

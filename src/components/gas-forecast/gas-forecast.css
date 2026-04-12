@@ -19,6 +19,14 @@
     width: 50%;
 }
 
+.gas-forecast-chart {
+    width: 100%;
+}
+
+.gas-forecast-chart .recharts-wrapper {
+    margin: 0 auto;
+}
+
 .subcomponent-border {
     border: 1px solid rgb(255 255 255 / 0.1);
     border-radius: .75rem;
@@ -41,17 +49,7 @@
     filter: blur(100px);
 }
 
-.gas-forecast-title>h2 {
-    --tw-text-opacity: 1;
-    color: rgb(197 197 212 / 1);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-family: Manrope;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 20px;
-    margin: 5px 0px;
-}
+
 
 .gas-forecast-title>p {
     color: rgb(189 244 255 / 1);
@@ -138,4 +136,9 @@
 .gas-forecast-disclaimer {
     color: rgb(197 197 212 / 1);
     font-size: 10px;
+}
+
+.gas-forecast-chart h3 {
+    text-align: center;
+    padding-bottom: 20px;
 }
