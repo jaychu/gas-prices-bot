@@ -30,22 +30,11 @@ export default function RootLayout({
       className={`${manrope.className} ${inter.className} h-full antialiased`}
     >
       <body>
-
-        <nav>
-          <span className="material-symbols-outlined home-logo">
-            local_gas_station
-          </span>
-          <ul>
-            <li>
-              <NavLink href="/" icon="online_prediction" text="Gas Forecast" />
-            </li>
-            <li>
-              <NavLink href="/historical-data" icon="finance_mode" text="Historical Data" />
-            </li>
-          </ul>
-        </nav>
         <main>
           <header>
+            <span className="material-symbols-outlined home-logo">
+              local_gas_station
+            </span>
             <h1>
               Gas Price Bot Info
             </h1>

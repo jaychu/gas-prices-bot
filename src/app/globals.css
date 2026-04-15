@@ -1,6 +1,4 @@
 :root {
-  --width-nav: 256px;
-  --padding-left-nav: 25px;
   --global-padding-top: 20px;
 }
 
@@ -11,15 +9,20 @@ body {
 }
 
 main {
-  margin-left: calc(var(--width-nav) + var(--padding-left-nav));
   padding-top: var(--global-padding-top);
 }
 
 main header {
   margin-left: 20px;
+  display: flex;
+  align-items: center;
 }
 
-h1,
+main header .home-logo {
+  color: #fff;
+}
+
+
 h2 {
   text-transform: uppercase;
 }
@@ -32,6 +35,7 @@ h1 {
   line-height: 32px;
   letter-spacing: -1.2px;
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 h2,
@@ -50,50 +54,4 @@ h2 {
 
 h3 {
   font-size: 16px;
-}
-
-nav {
-  width: var(--width-nav);
-  padding-top: var(--global-padding-top);
-  padding-left: var(--padding-left-nav);
-  height: 100%;
-  left: 0;
-  position: fixed;
-  background-color: rgb(2 6 23 / 0.8);
-
-}
-
-nav span.home-logo {
-  color: #fff;
-  font-size: 60px;
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-}
-
-nav ul li a {
-  color: rgb(100 116 139 / 1);
-  text-decoration: none;
-  display: flex;
-  height: 40px;
-  align-items: center;
-  padding: 5px 15px;
-}
-
-nav ul li a.active {
-  color: rgb(129 140 248 / 1);
-  border-right: 4px solid rgb(129 140 248 / 1);
-  background-color: rgb(99 102 241 / 0.1);
-}
-
-nav ul li a span.nav-title {
-  padding-left: 10px;
-}
-
-nav ul li a span.material-symbols-outlined {
-  font-size: 24px;
 }
