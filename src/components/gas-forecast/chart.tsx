@@ -5,7 +5,7 @@ export default function GasForecastChart({ gasrow }) {
     return (
         <LineChart
             height={200}
-            width={1000}
+            width="100%"
             barCategoryGap="10%"
             barGap={4}
             data={gasrow}

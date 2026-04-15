@@ -19,10 +19,6 @@
     width: 50%;
 }
 
-.gas-forecast-chart {
-    width: 100%;
-}
-
 .gas-forecast-chart .recharts-wrapper {
     margin: 0 auto;
 }
