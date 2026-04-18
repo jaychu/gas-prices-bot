@@ -7,9 +7,9 @@ import GasForecastDelta from "./delta";
 // You can make Server Components async!
 export default async function GasForecast() {
 
-  let startDate = "2026-04-06";
-  let todayDate = "2026-04-11"
-  let tomorrowDate = "2026-04-12";
+  let startDate = "2026-04-13";
+  let todayDate = "2026-04-18"
+  let tomorrowDate = "2026-04-19";
   const res = await fetch(`http://localhost:${serverPort}/getEntryRange`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -29,6 +29,15 @@ export default async function GasForecast() {
       tomorrowRow = row;
     }
   });
+  if (tomorrowRow == null) {
+    tomorrowRow = {
+      date: tomorrowDate,
+      price: null,
+      note: "Note: Price for tomorrow has not yet been determined. "
+    }
+    result.push(tomorrowRow)
+  }
+
   return (
     <div className="gas-forecast-component">
       <div className="gas-forecast-glow"></div>

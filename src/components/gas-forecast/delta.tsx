@@ -1,6 +1,7 @@
 export default function GasForecastDelta({ todayPrice, tomorrowPrice }) {
 
-    let delta = tomorrowPrice - todayPrice;
+    let delta = (tomorrowPrice == null) ? 0 : tomorrowPrice - todayPrice;
+
     let deltaIcon;
     let deltaClass = "gas-forcast-component-delta";
     if (delta < 0) {

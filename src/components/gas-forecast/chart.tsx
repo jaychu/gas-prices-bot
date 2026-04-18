@@ -1,7 +1,6 @@
 'use client'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 export default function GasForecastChart({ gasrow }) {
-
     return (
         <LineChart
             height={200}
@@ -11,6 +10,7 @@ export default function GasForecastChart({ gasrow }) {
             data={gasrow}
             layout="horizontal"
             accessibilityLayer
+            responsive
             stackOffset="none"
             syncMethod="index"
             throttleDelay="raf"
@@ -23,12 +23,7 @@ export default function GasForecastChart({ gasrow }) {
             ]}>
             <Line type="monotone" dataKey="price" stroke="#818cf8" />
             <CartesianGrid stroke="#64748b" strokeDasharray="3 3" />
-            <XAxis
-                padding={{
-                    left: 100,
-                    right: 100
-                }}
-                dataKey="date" />
+            <XAxis dataKey="date" />
             <YAxis domain={["dataMin - 10", "dataMax + 10"]} />
             <Tooltip />
         </LineChart>

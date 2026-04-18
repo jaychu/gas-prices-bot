@@ -111,6 +111,8 @@
     display: flex;
     align-items: center;
     height: 30px;
+    color: #e1e2eb66;
+
 }
 
 .gas-forcast-component-delta .material-symbols-outlined {
@@ -128,6 +130,7 @@
 .gas-forcast-component-delta.price-up {
     color: rgb(255 180 171 / 1);
 }
+
 
 .gas-forecast-disclaimer {
     color: rgb(197 197 212 / 1);
