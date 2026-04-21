@@ -10,14 +10,7 @@
     margin: 20px;
 }
 
-.gas-forecast-component-root {
-    display: flex
-}
 
-.gas-forecast,
-.gas-forecast-notes {
-    width: 50%;
-}
 
 .gas-forecast-chart .recharts-wrapper {
     margin: 0 auto;
@@ -27,19 +20,12 @@
     border: 1px solid rgb(255 255 255 / 0.1);
     border-radius: .75rem;
     margin-top: 10px;
-    padding: 20px;
-}
-
-.gas-forecast {
-    margin-right: 10px;
 }
 
 .gas-forecast-glow {
     width: 200px;
     height: 200px;
     position: absolute;
-    top: -75px;
-    right: -75px;
     border-radius: 9999px;
     background-color: rgba(99, 102, 241, 0.1);
     filter: blur(100px);
@@ -54,9 +40,12 @@
     font-family: Inter;
 }
 
+.gas-forecast-title>p>a {
+    color: rgb(189 244 255 / 1);
+}
+
 .gas-forcast-component-cards-root {
     display: flex;
-    justify-content: left;
     align-items: center;
 }
 
@@ -79,10 +68,8 @@
 .gas-forecast-notes {
     font-family: Inter;
     font-size: 14px;
-    margin-left: 10px;
     color: rgb(197 197 212 / 1);
 }
-
 
 
 #todayPrice.gas-forcast-component-card .gas-card-price {
@@ -140,4 +127,75 @@
 .gas-forecast-chart h3 {
     text-align: center;
     padding-bottom: 20px;
+}
+
+@media (min-width: 1051px) {
+    .gas-forecast-component-root {
+        display: flex;
+    }
+
+    .gas-forecast {
+        margin-right: 10px;
+    }
+
+    .gas-forecast,
+    .gas-forecast-notes {
+        width: 50%;
+    }
+
+    .gas-forecast-notes {
+        margin-left: 10px;
+    }
+
+    .gas-forecast-glow {
+        top: -75px;
+        right: -75px;
+    }
+
+    .subcomponent-border {
+        padding: 20px;
+    }
+
+    .gas-forcast-component-cards-root {
+        justify-content: left;
+    }
+}
+
+@media (max-width: 1050px) {
+    .gas-forecast-component-root {
+        display: block;
+    }
+
+    .gas-forecast,
+    .gas-forecast-notes {
+        width: 100%;
+    }
+
+    .gas-forecast-chart {
+        overflow: scroll;
+    }
+
+    .gas-forecast-glow {
+        top: 0;
+        right: 0;
+    }
+
+    .subcomponent-border {
+        padding: 20px 0;
+    }
+
+    .gas-forcast-component-cards-root {
+        justify-content: center;
+    }
+
+    .gas-forecast-notes p {
+        padding: 0 20px;
+    }
+
+}
+
+@media (max-width: 500px) {
+    .gas-forcast-component-cards-root {
+        flex-direction: column;
+    }
 }

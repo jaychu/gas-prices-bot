@@ -44,7 +44,7 @@ export default async function GasForecast() {
       <div className="gas-forecast-title-row">
         <div className="gas-forecast-title">
           <h2>Your Gas Price Forecast</h2>
-          <p>Powered by EnPro on CP24</p>
+          <p>Powered by EnPro on <a href="https://toronto.citynews.ca/toronto-gta-gas-prices/">CP24</a></p>
         </div>
         <div className="gas-forecast-status">
           <span></span>
@@ -59,7 +59,7 @@ export default async function GasForecast() {
           </div>
         </div>
         <div className="gas-forecast-notes subcomponent-border">
-          {tomorrowRow.note}
+          <p>{tomorrowRow.note}</p>
         </div>
       </div>
       <div className="gas-forecast-chart subcomponent-border">
