@@ -1,5 +1,9 @@
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import { Events, GatewayIntentBits, type Interaction } from "discord.js";
+import { Client } from "discordx";
+import { importx } from "@discordx/importer";
 import express, { Request, Response } from 'express';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import { CronJob } from "cron";
 import { getDiscordToken } from './helpers/secrets.js';
 import { GrabGasPrediction } from './helpers/functions.js';
@@ -16,21 +20,25 @@ const { default: config } = await import(configFilePath, {
 
 const app = express();
 
-app.use(express.json());;
+app.use(express.json());
 
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildPresences,
     GatewayIntentBits.MessageContent
-  ]
+  ],
+  silent: false,
+  // If you only want to use global commands only, comment this line
+  botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)]
 });
 
-let discordToken = await getDiscordToken();
-client.login(discordToken);
+start();
 
-client.on(Events.ClientReady, readyClient => {
-
+client.on(Events.ClientReady, async () => {
+  await client.initApplicationCommands();
   var job = new CronJob('0 15 * * *', function () {
     (async () => {
       client.channels.cache.each(
@@ -40,6 +48,18 @@ client.on(Events.ClientReady, readyClient => {
   }, null, true, config.TIMEZONE);
   console.log("GasPriceBot is now online!");
 });
+
+client.on("interactionCreate", (interaction: Interaction) => {
+  client.executeInteraction(interaction);
+});
+
+async function start() {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  await importx(__dirname + "/commands/**/*.{js,ts}");
+  let discordToken = await getDiscordToken();
+  await client.login(discordToken);
+}
 
 // A POST route to receive date range, send back corresponding rows
 app.post('/getEntryRange', (req: Request, res: Response) => {

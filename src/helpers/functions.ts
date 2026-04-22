@@ -1,7 +1,7 @@
 import axios from "axios";
 import { parse } from 'node-html-parser';
-import { configFile, msgFromGasbot_noUpdate, noteFromGasbot_noUpdate } from '../constants.js';
-import { EmbedBuilder } from "discord.js";
+import { configFile, noteFromGasbot_noUpdate } from '../constants.js';
+import { EmbedBuilder, Role, GuildMember, Guild, MessageFlags } from "discord.js";
 import { AddNewEntry, CheckEntry } from "./queries.js"
 
 const { default: config } = await import(configFile, {
@@ -48,14 +48,14 @@ export async function GrabGasPrediction(channel) {
     if (CheckRowDuplicate) {
       console.log("No update From EnPro!")
       channel.send({
-        content: msgFromGasbot_noUpdate,
+        content: `<@&${config.ROLE_ID}>, EnPro did not provide an update.`,
         embeds: [PostMessage("0", finalPrice, noteFromGasbot_noUpdate, null)]
       });
       AddEntryIntoDB(finalPrice, "");
     } else if (delta == null) {
       console.log("No Change expected From EnPro!")
       channel.send({
-        content: "Your Gas Price Forecast for tomorrow:",
+        content: `<@&${config.ROLE_ID}>, gas price expected to be ${finalPrice}, a change of ${delta}.`,
         embeds: [PostMessage("0", finalPrice, msg + notes, null)]
       });
       AddEntryIntoDB(finalPrice, notes);
@@ -63,7 +63,7 @@ export async function GrabGasPrediction(channel) {
     } else {
       console.log("Change expected From EnPro!")
       channel.send({
-        content: "Your Gas Price Forecast for tomorrow:",
+        content: `<@&${config.ROLE_ID}>, gas price expected to be ${finalPrice}, a change of ${delta}.`,
         embeds: [PostMessage(delta, finalPrice, msg + notes, arrow)]
       });
       AddEntryIntoDB(finalPrice, notes);
@@ -73,10 +73,35 @@ export async function GrabGasPrediction(channel) {
   }
 }
 
+export async function addGasWatcher(interaction) {
+  let user = interaction.user;
+  let guild = interaction.member.guild as Guild;
+  let member = await guild.members.fetch(user.id) as GuildMember;
+  let role = await guild.roles.fetch(config.ROLE_ID) as Role;
+  member.roles.add(role);
+  await interaction.reply({
+    content: "You have been added to the group and will now be notified when gas prices change!",
+    flags: [MessageFlags.Ephemeral]
+  });
+}
+
+export async function removeGasWatcher(interaction) {
+  let user = interaction.user;
+  let guild = interaction.member.guild as Guild;
+  let member = await guild.members.fetch(user.id) as GuildMember;
+  let role = await guild.roles.fetch(config.ROLE_ID) as Role;
+  member.roles.remove(role);
+  await interaction.reply({
+    content: "You have been removed from the group and will no longer be notified",
+    flags: [MessageFlags.Ephemeral]
+  });
+}
+
+
 function PostMessage(delta: string, finalPrice: string, msg: string, arrow: string) {
   let message = new EmbedBuilder()
     .setTitle(`Gas Price: ${finalPrice} (${delta}) cent(s)/litre`)
-    .setURL('https://toronto.citynews.ca/toronto-gta-gas-prices/')
+    .setURL('https://gaswatch.justinchu.com/')
     .setDescription(msg);
   if (delta == "0") {
     message.setTitle(`Gas Price: ${finalPrice} cent(s)/litre`)
