@@ -1,11 +1,16 @@
 {
   "name": "gas-prices-bot",
-  "version": "2.1.3",
+  "version": "3.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
+  "main": "build/src/server.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node build/bot.js"
+    "next-build": "next build",
+    "next-dev": "next dev -p 8030",
+    "next-start": "next start -p 8030",
+    "server-build": "tsc -p tsconfig.server.json",
+    "server-start": "node build/src/server.js",
+    "start": "concurrently \"npm run server-start\" \"npm run next-start\""
   },
   "repository": {
     "type": "git",
@@ -18,14 +23,29 @@
   },
   "homepage": "https://github.com/jaychu/gas-prices-bot#readme",
   "dependencies": {
+    "@discordx/importer": "^1.3.3",
+    "@discordx/utilities": "^8.0.0",
     "axios": "^1.13.6",
     "cron": "^4.4.0",
     "discord.js": "^14.25.1",
+    "discordx": "^11.13.3",
+    "express": "^5.2.1",
     "fs": "^0.0.1-security",
-    "node-html-parser": "^7.1.0"
+    "material-symbols": "^0.44.0",
+    "next": "16.2.1",
+    "node-html-parser": "^7.1.0",
+    "path": "^0.12.7",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-is": "^19.2.5",
+    "recharts": "^3.8.1"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.1",
     "nodemon": "^3.1.14",
     "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
