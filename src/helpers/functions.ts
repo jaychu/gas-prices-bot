@@ -55,7 +55,7 @@ export async function GrabGasPrediction(channel) {
     } else if (delta == null) {
       console.log("No Change expected From EnPro!")
       channel.send({
-        content: `<@&${config.ROLE_ID}>, gas price expected to be ${finalPrice}, a change of ${delta}.`,
+        content: `<@&${config.ROLE_ID}>, gas price expected to be ${finalPrice} (${delta}) cent(s)/litre.`,
         embeds: [PostMessage("0", finalPrice, msg + notes, null)]
       });
       AddEntryIntoDB(finalPrice, notes);
@@ -63,7 +63,7 @@ export async function GrabGasPrediction(channel) {
     } else {
       console.log("Change expected From EnPro!")
       channel.send({
-        content: `<@&${config.ROLE_ID}>, gas price expected to be ${finalPrice}, a change of ${delta}.`,
+        content: `<@&${config.ROLE_ID}>, gas price expected to be ${finalPrice} (${delta}) cent(s)/litre.`,
         embeds: [PostMessage(delta, finalPrice, msg + notes, arrow)]
       });
       AddEntryIntoDB(finalPrice, notes);
