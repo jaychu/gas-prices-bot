@@ -106,7 +106,7 @@ function PostMessage(delta: string, finalPrice: string, msg: string, arrow: stri
   if (delta == "0") {
     message.setTitle(`Gas Price: ${finalPrice} cent(s)/litre`)
   }
-  if (!arrow) {
+  if (arrow != null) {
     message.setThumbnail(arrow);
   }
   return message;
