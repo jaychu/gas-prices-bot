@@ -18,7 +18,9 @@ services:
     volumes:
       - gaspricebot-data:/gaspricebot-data
     working_dir: /gaspricebot
-
+    ports:
+      - "8030:8030" # Frontend
+      - "8031:8031" # Backend
 
 secrets:
   discord_token:

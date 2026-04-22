@@ -9,7 +9,8 @@
     "next-dev": "next dev -p 8030",
     "next-start": "next start -p 8030",
     "server-build": "tsc -p tsconfig.server.json",
-    "server-start": "node build/src/server.js"
+    "server-start": "node build/src/server.js",
+    "start": "concurrently \"npm run server-start\" \"npm run next-start\""
   },
   "repository": {
     "type": "git",

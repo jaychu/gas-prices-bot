@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Manrope, Inter } from "next/font/google";
-import NavLink from "../components/nav/nav-link";
 import "./globals.css";
 import 'material-symbols/outlined.css';
+
+export const dynamic = 'force-dynamic';
 
 const manrope = Manrope({
   subsets: ['latin'],
