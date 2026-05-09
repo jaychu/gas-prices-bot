@@ -76,5 +76,10 @@ function createDate(offset) {
   if (offset != 0)
     DateObj.setDate(DateObj.getDate() + offset);
 
-  return DateObj.toISOString().split('T')[0];
+  return DateObj.toLocaleString('en-CA', {
+    timeZone: 'America/New_York',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
 }
